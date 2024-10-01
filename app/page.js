@@ -17,8 +17,10 @@ import { friends } from './friends';
 
 
 export default function Home() {
-  //
-  const ENDPOINT = 'http://www.localhost:6000';
+
+  
+  //Connecting my server to my client sider
+  const ENDPOINT = 'http://www.localhost:8080';
 
   const socket = io(ENDPOINT, {
     transports: ['websocket'],
@@ -126,7 +128,13 @@ export default function Home() {
           <h1 className='text-3xl font-semibold'>John C.</h1>
           <MoreHorizIcon fontSize="large" className='text-yellow-500'/>
         </VisibleNameContainer>
-        <div className="flex-auto bg-white"></div>
+        <div className="flex-auto flex-col bg-white">
+        {messages.map((message, index) => (
+          <div className='w-auto flex gap-x-2 items-center' key={index}>
+            <img src='/users/userOne.png' className='w-10 h-10 rounded-full border-2 border-green-300' alt='costumer One' />
+            <p>{message}</p>
+          </div>
+        ))}</div>
         <div className="w-full h-28 bg-white border-t border-gray-200 px-4 ">
           <div className="w-full h-10 flex items-center justify-between">
             <div className="w-14 h-auto flex justify-between">
@@ -138,10 +146,16 @@ export default function Home() {
               <VideocamIcon fontSize="medium" />
             </div>
           </div>
+          <div className='w-full flex '>
           <input
             type="text"
+            ref={inputRef}
             className="w-full h-14 border-none focus:outline-none"
           />
+          <button onClick={sendMessage} type='button' className='w-14 h-full bg-blue-600 text-white focus:outline-none cursor-pointer'>Send</button>
+
+          </div>
+        
         </div>
       </section>
     </main>
